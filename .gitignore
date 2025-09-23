@@ -7,6 +7,12 @@ __pycache__/
 *.py
 !cardbot.py
 
+# Разрешаем изображения
+!*.jpg
+!*.jpeg
+!*.png
+!*.gif
+
 # Ignored project files
 Notes.py
 ClassesWork.py
