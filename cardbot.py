@@ -57,7 +57,7 @@ async def bot_set_cards(message: Message):
         await message.answer("Вы меняете карты. Выши новые карты")
         await message.answer(cards)
         
-@dp.message(Command("loo"))
+@dp.message(Command("look"))
 async def look(message: Message):
         look_cards = card_game.look_cards()
         look_card = "  ".join(look_cards)
