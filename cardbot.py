@@ -42,6 +42,22 @@ class CardGame:
 card_game = CardGame()
 deck = card_game.create_deck()
 
+cards = card_game.get_cards()
+print(*cards)
+
+def get_card_value(card):
+    if card.startswith("10") or card[1] in "JQK":
+        return 10
+    elif card[1] == "A":
+        return 12
+    elif card[1] in "23456789":
+        return int(card[1])
+    return 0  
+
+def chips_counter(cards):
+    return [get_card_value(card) for card in cards]
+print(*chips_counter(cards))
+
 @dp.message(Command("start"))
 async def bot_cards(message: Message):
         card_game.deck = card_game.create_deck()
@@ -59,9 +75,12 @@ async def bot_set_cards(message: Message):
         
 @dp.message(Command("look"))
 async def look(message: Message):
-        look_cards = card_game.look_cards()
-        look_card = "  ".join(look_cards)
-        await message.answer(look_card)
+    look_cards = card_game.look_cards()
+    look_card = "  ".join(look_cards)
+    await message.answer(look_card)
+    # send numeric values as a string (aiogram expects text:str)
+    hand_values = chips_counter(card_game.player_hand)
+    await message.answer("  ".join(map(str, hand_values)))
         
 if __name__ == "__main__":
     dp.run_polling(bot)
